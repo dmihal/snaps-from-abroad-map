@@ -26,7 +26,7 @@ var getFBPosts = function(callback) {
 router.get('/posts', function(req, res) {
   getFBPosts(function(data){
     res.set('Content-Type', 'application/json');
-    res.json(data);
+    res.json(data.posts.data);
   });
 });
 
