@@ -11,10 +11,15 @@ function loadPoints(map) {
     let verticies = [];
     posts.forEach(function(post){
       if (post.place) {
-        verticies.push({
+        pos = {
           lat: post.place.location.latitude,
           lng: post.place.location.longitude
+        };
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map
         });
+        verticies.push(pos);
       }
     });
     var path = new google.maps.Polyline({
