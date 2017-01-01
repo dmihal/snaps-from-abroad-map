@@ -4,6 +4,11 @@ function initMap() {
     center: {lat: 39.8281, lng: -98.5795}
   });
   loadPoints(map);
+
+  document.querySelector('#modal-background').addEventListener('click', function() {
+    document.querySelector('#modal').className = '';
+    document.querySelector('#player').src = '';
+  });
 }
 
 function loadPoints(map) {
@@ -18,6 +23,9 @@ function loadPoints(map) {
         var marker = new google.maps.Marker({
           position: pos,
           map: map
+        });
+        marker.addListener('click', function() {
+          showVideo(post.attachments.data[0].target.id);
         });
         verticies.push(pos);
       }
@@ -46,4 +54,9 @@ function getPosts(callback) {
   };
 
   request.send();
+}
+
+function showVideo(id) {
+  document.querySelector('#modal').className = 'visible';
+  document.querySelector('#player').src = 'https://www.facebook.com/video/embed?video_id=' + id;
 }
