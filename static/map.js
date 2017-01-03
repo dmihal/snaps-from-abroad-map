@@ -64,5 +64,5 @@ function getPosts(callback) {
 
 function showVideo(id) {
   document.querySelector('#modal').className = 'visible';
-  document.querySelector('#player').src = 'https://www.facebook.com/video/embed?video_id=' + id;
+  document.querySelector('#player').src = 'https://www.facebook.com/plugins/video.php?allowfullscreen=true&app_id&container_width=1264&href=https%3A%2F%2Fwww.facebook.com%2Fsnapsfromabroad%2Fvideos%2F' + id +'%2F&locale=en_US&sdk=joey&width=500';
 }
