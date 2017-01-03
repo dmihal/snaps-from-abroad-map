@@ -13,8 +13,9 @@ function initMap() {
 
 function loadPoints(map) {
   getPosts(function(posts){
-    let verticies = [];
-    posts.forEach(function(post){
+    var verticies = [];
+    var bounds = new google.maps.LatLngBounds();
+    posts.forEach(function(post, i){
       if (post.place) {
         pos = {
           lat: post.place.location.latitude,
@@ -28,6 +29,9 @@ function loadPoints(map) {
           showVideo(post.attachments.data[0].target.id);
         });
         verticies.push(pos);
+        if (post.place.location.country != 'United States') {
+          bounds.extend(pos);
+        }
       }
     });
     var path = new google.maps.Polyline({
@@ -39,6 +43,8 @@ function loadPoints(map) {
       });
 
     path.setMap(map);
+
+    map.fitBounds(bounds);
   });
 }
 
