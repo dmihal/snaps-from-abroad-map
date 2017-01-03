@@ -6,7 +6,7 @@ var router = express.Router();
 
 var getFBPosts = function(callback) {
   var url = 'https://graph.facebook.com/v2.8/snapsfromabroad?&fields=posts.limit(100)%7Bplace%2Cattachments%7D&format=json&access_token=' + config.fbAppId + '|' + config.fbAppSecret;
-  https.get(url, function(res) {
+  var req = https.get(url, function(res) {
     res.setEncoding('utf8');
     var rawData = '';
     res.on('data', function(chunk) {
@@ -21,10 +21,16 @@ var getFBPosts = function(callback) {
       }
     });
   });
+  req.on('error', function() {
+    callback();
+  });
 };
 
 router.get('/posts', function(req, res) {
   getFBPosts(function(data){
+    if (!data) {
+      return res.status(500).end();
+    }
     res.set('Content-Type', 'application/json');
     res.json(data.posts.data);
   });
