@@ -24,8 +24,9 @@ html, body {
 }
 #modal-window {
   position: relative;
-  margin: 15px;
+  margin: 25px auto;
   z-index: 5;
+  width: 790px;
 }
 #modal-body {
   background: white;
