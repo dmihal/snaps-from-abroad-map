@@ -27,6 +27,7 @@ function loadPoints(map) {
         });
         marker.addListener('click', function() {
           showVideo(post.attachments.data[0].target.id);
+          ga('send', 'event', 'Marker', 'open', post.attachments.data[0].title);
         });
         verticies.push(pos);
         if (post.place.location.country != 'United States') {
