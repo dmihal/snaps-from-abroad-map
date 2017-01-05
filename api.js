@@ -1,11 +1,10 @@
 var express = require('express');
-var config = require('./config');
 var https = require('https');
 
 var router = express.Router();
 
 var getFBPosts = function(callback) {
-  var url = 'https://graph.facebook.com/v2.8/snapsfromabroad?&fields=posts.limit(100)%7Bplace%2Cattachments%7D&format=json&access_token=' + config.fbAppId + '|' + config.fbAppSecret;
+  var url = 'https://graph.facebook.com/v2.8/snapsfromabroad?&fields=posts.limit(100)%7Bplace%2Cattachments%7D&format=json&access_token=' + process.env.FB_APP_ID + '|' + process.env.FB_APP_SECRET;
   var req = https.get(url, function(res) {
     res.setEncoding('utf8');
     var rawData = '';
