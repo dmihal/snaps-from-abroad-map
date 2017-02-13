@@ -15,6 +15,12 @@ function loadPoints(map) {
   getPosts(function(posts){
     var verticies = [];
     var bounds = new google.maps.LatLngBounds();
+    var continents = {
+      europe: new google.maps.LatLngBounds(),
+      eurasia: new google.maps.LatLngBounds(),
+      africa: new google.maps.LatLngBounds(),
+      asia: new google.maps.LatLngBounds()
+    };
     posts.forEach(function(post, i){
       if (post.place) {
         pos = {
@@ -33,6 +39,7 @@ function loadPoints(map) {
         if (post.place.location.country != 'United States') {
           bounds.extend(pos);
         }
+        setBounds(post.place.location.country, pos, continents);
       }
     });
     var path = new google.maps.Polyline({
@@ -46,6 +53,8 @@ function loadPoints(map) {
     path.setMap(map);
 
     map.fitBounds(bounds);
+
+    addButtons(map, continents);
   });
 }
 
@@ -61,6 +70,48 @@ function getPosts(callback) {
   };
 
   request.send();
+}
+
+function setBounds(country, pos, continents) {
+  switch(country) {
+  case 'Italy':
+  case 'Greece':
+  case 'Germany':
+    continents.europe.extend(pos);
+    break;
+  case 'Georgia':
+  case 'Israel':
+  case 'Turkey':
+    continents.eurasia.extend(pos);
+    break;
+  case 'South Africa':
+  case 'Namibia':
+    continents.africa.extend(pos);
+    break;
+  case 'India':
+  case 'Israel':
+  case 'Thailand':
+  case 'United Arab Emirates':
+    continents.asia.extend(pos);
+    break;
+  }
+}
+
+function addButtons(map, continents) {
+  var listener = function() {
+    map.fitBounds(continents[this.dataset.continent]);
+  };
+
+  var container = document.createElement('div');
+  for (var key in continents) {
+    var button = document.createElement('div');
+    button.dataset.continent = key;
+    button.innerText = key.charAt(0).toUpperCase() + key.slice(1);
+    button.className = 'topBtn';
+    button.addEventListener('click', listener);
+    container.appendChild(button);
+  }
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(container);
 }
 
 function showVideo(id) {
