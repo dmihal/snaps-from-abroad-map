@@ -92,6 +92,9 @@ function setBounds(country, pos, continents) {
   case 'Israel':
   case 'Thailand':
   case 'United Arab Emirates':
+  case 'Vietnam':
+  case 'South Korea':
+  case 'Japan':
     continents.asia.extend(pos);
     break;
   }
