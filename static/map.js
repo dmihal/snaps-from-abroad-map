@@ -115,6 +115,15 @@ function addButtons(map, continents) {
     container.appendChild(button);
   }
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(container);
+
+  if (window.self !== window.top) { //If in iframe
+    var link = document.createElement('a');
+    link.innerText = 'Full Screen';
+    link.href = window.location.href;
+    link.target = '_blank';
+    link.className = 'topBtn';
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(link);
+  }
 }
 
 function showVideo(id) {
