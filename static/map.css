@@ -26,7 +26,7 @@ html, body {
   position: relative;
   margin: 25px auto;
   z-index: 5;
-  width: 790px;
+  max-width: 790px;
 }
 #modal-body {
   background: white;
@@ -39,6 +39,9 @@ html, body {
   right: 0;
   background: rgba(80, 80, 80, 0.50);
   z-index: 1;
+}
+#player {
+  width: 100%;
 }
 
 .topBtn {
